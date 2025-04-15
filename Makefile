@@ -26,14 +26,18 @@ DEST = /lib/modules/$(CURRENT)/kernel/$(MDIR)
 
 obj-m      := $(TARGET).o
 
+
 default:
 	make -C $(KDIR) M=$(PWD) modules
 
-$(TARGET).o: $(OBJS)
+# $(OBJS):
+# 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $(TARGET).c
+
+$(TARGET): $(OBJS)
 	$(LD) $(LD_RFLAG) -r -o $@ $(OBJS)
 
 install:
-	su -c "cp -v $(TARGET).ko $(DEST) && /sbin/depmod -a"
+	cp -v $(TARGET).ko $(DEST) && /sbin/depmod -a
 
 clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
