@@ -592,7 +592,7 @@ static void ax88179_get_drvinfo(struct net_device *net,
                                 struct ethtool_drvinfo *info) {
   /* Inherit standard device info */
   usbnet_get_drvinfo(net, info);
-  strlcpy(info->version, DRIVER_VERSION, sizeof info->version);
+  strncpy(info->version, DRIVER_VERSION, sizeof info->version);
   info->eedump_len = 0x3e;
 }
 #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0)
@@ -921,10 +921,10 @@ static int ax88179_set_mac_addr(struct net_device *net, void *p) {
 
 #if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 29)
 
-#if (defined(RHEL_RELEASE_CODE) &&                                             \
-     (RHEL_RELEASE_CODE >= RHEL_RELEASE_VERSION(7, 4)))
-#define ndo_change_mtu ndo_change_mtu_rh74
-#endif
+// #if (defined(RHEL_RELEASE_CODE) &&                                             \
+//      (RHEL_RELEASE_CODE >= RHEL_RELEASE_VERSION(7, 4)))
+// #define ndo_change_mtu ndo_change_mtu_rh74
+// #endif
 
 static const struct net_device_ops ax88179_netdev_ops = {
     .ndo_open = usbnet_open,
